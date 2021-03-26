@@ -69,7 +69,6 @@ body {
   font-size: 1rem;
 }
 .dots__number {
-  font-size: 0.5rem;
   position: relative;
   margin-left: 5%;
   margin-right: 5%;
@@ -204,10 +203,11 @@ body {
   transition-timing-function: cubic-bezier(0, 1.33, 0, 0.96);
 }
 .text__container {
+  top: 42.5vh;
   width: 60%;
   position: absolute;
   transform: translateX(-700%);
-  transition: 3s;
+  transition: 0s;
   z-index: 11;
 }
 
