@@ -191,10 +191,8 @@ function createSlider(slider, data) {
   var timerId = null;
 
   var timer = new Timer(function() {
-    plusSlides(1)
-    move(1)
-  }, 5000);
-  move(1)
+    move(1);
+  }, 5000)
 
   leftBtn.addEventListener("click", () => {
     plusSlides(-1);
@@ -217,8 +215,7 @@ function createSlider(slider, data) {
           toBeSelected.parentElement.classList.add("active__dots");
         } else if (toBeSelected.className === currentlySelected.className) {
           toBeSelected.classList.add("active__dots")
-        };
-
+        }
         currentSlider(i+1);
         move(1)
         timer.reset(5000);
@@ -234,7 +231,7 @@ function createSlider(slider, data) {
   };
 
   
-
+  
 
 
   Array.from(dotsBlock.getElementsByClassName("dots__item")).forEach((el) => {
@@ -248,41 +245,37 @@ function createSlider(slider, data) {
             timer.stop();
           } else timer.start()
     });
-  });
- 
+  })
   dotsBlock.addEventListener('mouseout', event => {
     if(event.target.classList.contains('active__dots')) {
-      move(1);
+      move(1)
       timer.start();
     }
   });
-  
+  window.onload = function() {
+    timer.reset(5000);
+    move(1);
+  };
   function move(param) {
-    var slideBarActimeItemFunction = (n) => {
-      let result = 0;
-      for (let index = 0; index < sliderRangeBar.length; index++) {
-        const element = sliderRangeBar[index];
-        if(element.parentElement ===  slider.querySelector(".range__active")) { 
-          result = element;
-          slideBarActimeItem = result;
-        };
+    // let movePause = 0;
+    // param = movePause; ---------------------- убрать таймер слайдера
+    let rangeBarItem = 0;
+    dotsBlock.querySelectorAll('.range__bar').forEach(element => {
+      if(element.parentElement === slider.querySelector(".range__active")) {
+        rangeBarItem = element;
       }
-    
-      return slideBarActimeItem;
-    }
+    });
 
-    slideBarActimeItemFunction();
-
-    var elem = slideBarActimeItem;
+    var elem = rangeBarItem;
     var width = 0;
     width = param;
     timer.reset(5000);
     clearInterval(timerId);
 
-    timerId = setInterval(frame,50);
+    timerId = setInterval(frame,48);
     function frame() { 
-      if(width>=100) {
-        width = 1;
+      if(width===100) {
+        plusSlides(1);      
       }
        if(elem.parentElement != slider.querySelector(".range__active")){
         width = 0; 
@@ -298,6 +291,11 @@ function createSlider(slider, data) {
     }
     
   }
-
-
+  document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === 'visible') {
+      move(1);
+    } else {
+      move(0)
+    }
+  });
 }
